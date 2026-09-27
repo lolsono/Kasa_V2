@@ -1,0 +1,203 @@
+.page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    background-color: white;
+    overflow: hidden;
+}
+
+/** Partie de gauche **/
+
+.formSection {
+    width: 50%;
+    min-width: 400px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fafbfc;
+}
+
+/* Logo */
+
+.logo {
+    position: absolute;
+    top: 60px;
+    width: 252px;
+    height: 52px;
+}
+
+.logo img {
+    width: 252px;
+    height: 32px;
+    object-fit: cover;
+}
+
+/* Formulaire */
+
+.formContainer {
+    width: 280px;
+    margin-top: 25%;
+}
+
+.formContainer h1 {
+    margin: 0 0 40px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 40px;
+    font-weight: 700px;
+    color: #e85b00;
+}
+
+/* Champs */
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.inputGroup label {
+    margin-bottom: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400px;
+    color: #333;
+}
+
+.inputGroup input {
+    width: 100%;
+    height: 50px;
+    padding: 4px 7px;
+    border: 1px solid #e4e4e4;
+    border-radius: 1px;
+    background-color: white;
+    outline: none;
+    font-size: 11px;
+    box-sizing: border-box;
+}
+
+.inputGroup input:focus {
+    border-color: #e85b00;
+}
+
+/* Message erreure */
+
+.errorMessage {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    color: red;
+}
+
+/* Bouton */
+
+.loginButton {
+    width: 100%;
+    height: 50px;
+    margin-top: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #252525;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.loginButton:hover {
+    background-color: #616060;
+}
+
+/* Mot de passe oublié */
+
+.forgotPassword {
+    text-decoration: underline;
+    display: block;
+    margin-top: 15px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #e85b00;
+}
+
+.forgotPassword:hover {
+    text-decoration: none;
+}
+
+/* Inscription */
+
+.register {
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #444;
+}
+
+.register a {
+    color: #e85b00;
+    text-decoration: underline;
+}
+
+.register a:hover {
+    text-decoration: none;
+}
+
+
+/** Image de droite **/
+
+.imageSection {
+    position: relative;
+    width: 60%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.image {
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/** Responsive **/
+
+@media (max-width: 768px) {
+
+    .page {
+        padding: 0;
+    }
+
+    .container {
+        height: 100vh;
+        max-width: none;
+    }
+
+    .formSection {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .imageSection {
+        display: none;
+    }
+
+    .formContainer {
+        width: min(280px, 80%);
+    }
+}
