@@ -3,10 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import styles from "./AccountForm.module.css";
 import { useState } from "react";
-import {
-    updateProfile,
-    updatePassword
-} from "@/services/accountService";
+import { updateProfile, updatePassword } from "@/services/accountService";
 
 export default function AccountForm() {
 

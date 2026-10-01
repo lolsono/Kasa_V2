@@ -1,32 +1,4 @@
 /**
- * Transforme les données utilisateur
- * reçues de l'API pour les adapter au frontend.
- * Le frontend utilise :
- * {
- *     firstName: "Alice",
- *     lastName: "Martin"
- * }
- */
-function normalizeUser(user) {
-
-    if (!user) {
-        return null;
-    }
-
-    const nameParts = user.name?.trim().split(/\s+/) || [];
-
-    const firstName = nameParts.shift() || "";
-    const lastName = nameParts.join(" ");
-
-    return {
-        ...user,
-        firstName,
-        lastName,
-    };
-}
-
-
-/**
  * Fonction de connexion utilisateur.
  * @param {*} email
  * @param {*} password
@@ -53,41 +25,8 @@ export async function login(email, password) {
         );
     }
 
-    return {
-        ...data,
-        data: {
-            ...data.data,
-            user: normalizeUser(data.data.user),
-        },
-    };
-}
-
-
-/**
- * Récupère les informations de l'utilisateur connecté.
- */
-export async function getCurrentUser() {
-
-    const response = await fetch("/api/auth/me", {
-        method: "GET",
-        cache: "no-store",
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-        throw new Error(
-            data.message || "Utilisateur non authentifié"
-        );
-    }
-
-    return {
-        ...data,
-        data: {
-            ...data.data,
-            user: normalizeUser(data.data.user),
-        },
-    };
+    console.log(data);
+    return data;
 }
 
 /* Fonction de déconnexion */

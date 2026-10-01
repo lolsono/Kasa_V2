@@ -1,203 +1,131 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter, usePathname } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
-export default function Navbar() {
+export default function NavBar() {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
-    const { user, logout } = useAuth();
-    const router = useRouter();
-    const pathname = usePathname();
+  // Ferme le menu mobile à chaque changement de page
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
-    const [menuOpen, setMenuOpen] = useState(false);
-    const [mobileNavOpen, setMobileNavOpen] = useState(false);
-    const menuRef = useRef(null);
-    const mobileNavRef = useRef(null);
+  return (
+    <header className={styles.header}>
+      {/* ================= DESKTOP ================= */}
+      <nav className={styles.desktop} aria-label="Navigation principale">
+        <div className={styles.left}>
+          <Link href="/" className={styles.link}>
+            Accueil
+          </Link>
+          <Link href="/a-propos" className={styles.link}>
+            À propos
+          </Link>
+        </div>
 
-    const initials = user
-        ? `${user.lastName?.[0] || ""}${user.firstName?.[0] || ""}`
-        : "";
+        <Link href="/" className={styles.logo} aria-label="Kasa - accueil">
+          <Image
+            src="/logo_kasa.svg"
+            alt="Kasa"
+            width={72}
+            height={26}
+            priority
+          />
+        </Link>
 
-    const isCompteActive = pathname.startsWith("/dashboard");
-    const isProjetActive = pathname.startsWith("/projet");
+        <div className={styles.right}>
+          <Link href="/logements/nouveau" className={styles.addLink}>
+            + Ajouter un logement
+          </Link>
+          <Link
+            href="/favoris"
+            className={styles.iconLink}
+            aria-label="Favoris"
+          >
+            <Image
+              src="/icone_heart_red.svg"
+              alt="logo coeur rouge"
+              width={16}
+              height={16}
+              priority
+            />
+          </Link>
+          <span className={styles.spacer}>|</span>
+          <Link
+            href="/messages"
+            className={styles.iconLink}
+            aria-label="Messages"
+          >
+            <Image
+              src="/icone_tchat_red.svg"
+              alt="logo tchat rouge"
+              width={16}
+              height={16}
+              priority
+            />
+          </Link>
+        </div>
+      </nav>
 
-    // Ferme les menus si on clique en dehors
-    useEffect(() => {
-        function handleClickOutside(event) {
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setMenuOpen(false);
-            }
+      {/* ================= MOBILE ================= */}
+      <div className={styles.mobile}>
+        <div className={styles.mobileBar}>
+          <Link href="/" aria-label="Kasa - accueil">
+            <Image
+              src="logo_house.svg"
+              alt="Kasa"
+              width={30}
+              height={32}
+              priority
+            />
+          </Link>
 
-            if (mobileNavRef.current && !mobileNavRef.current.contains(event.target)) {
-                setMobileNavOpen(false);
-            }
-        }
+          <button
+            type="button"
+            className={styles.burger}
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          >
+            <span
+              className={`${styles.burgerLine} ${open ? styles.lineTop : ""}`}
+            />
+            <span
+              className={`${styles.burgerLine} ${styles.lineShort} ${open ? styles.lineMiddle : ""}`}
+            />
+            <span
+              className={`${styles.burgerLine} ${open ? styles.lineBottom : ""}`}
+            />
+          </button>
+        </div>
 
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
-
-    // Ferme le menu mobile quand on change de page
-    useEffect(() => {
-        setMobileNavOpen(false);
-    }, [pathname]);
-
-    const handleLogout = () => {
-        setMenuOpen(false);
-        setMobileNavOpen(false);
-        logout();
-        router.push("/connexion/login");
-    };
-
-    const navLinks = (
-        <>
-            <Link
-                href="/dashboard"
-                className={isCompteActive ? styles.active : ""}
-                onClick={() => setMobileNavOpen(false)}
-            >
-                <span className={styles.icon}>
-                    <Image
-                        src={
-                            isCompteActive
-                                ? "/logo_dashboard_white.svg"
-                                : "/logo_dashboard_orange.svg"
-                        }
-                        alt="logo du tableau de bord"
-                        className={styles.navIcon}
-                        width={24}
-                        height={24}
-                    />
-                </span>
-                Tableau de bord
-            </Link>
-
-            <Link
-                href="/projet"
-                className={isProjetActive ? styles.active : ""}
-                onClick={() => setMobileNavOpen(false)}
-            >
-                <span className={styles.icon}>
-                    <Image
-                        src={
-                            isProjetActive
-                                ? "/logo_folder_white.svg"
-                                : "/logo_folder_orange.svg"
-                        }
-                        alt="logo de dossier"
-                        className={styles.navIcon}
-                        width={24}
-                        height={24}
-                    />
-                </span>
-                Projets
-            </Link>
-        </>
-    );
-
-    return (
-        <nav className={styles.navbar}>
-
-            <Link href="/compte" className={styles.logoLink}>
-                <Image
-                    src="/Logo.svg"
-                    alt="Abricot"
-                    className={styles.logoAbricot}
-                    width={148}
-                    height={19}
-                />
-            </Link>
-
-            {/* Navigation desktop */}
-            <div className={styles.links}>
-                {navLinks}
-            </div>
-
-            <div className={styles.rightSide}>
-
-                {/* Bouton hamburger (mobile uniquement) */}
-                <div className={styles.mobileNavWrapper} ref={mobileNavRef}>
-
-                    <button
-                        type="button"
-                        className={styles.hamburgerButton}
-                        onClick={() => {
-                            setMobileNavOpen((prev) => !prev);
-                            setMenuOpen(false);
-                        }}
-                        aria-haspopup="true"
-                        aria-expanded={mobileNavOpen}
-                        aria-label="Ouvrir le menu de navigation"
-                    >
-                        <span
-                            className={`${styles.hamburgerBar} ${
-                                mobileNavOpen ? styles.hamburgerBarTop : ""
-                            }`}
-                        />
-                        <span
-                            className={`${styles.hamburgerBar} ${
-                                mobileNavOpen ? styles.hamburgerBarMiddleHidden : ""
-                            }`}
-                        />
-                        <span
-                            className={`${styles.hamburgerBar} ${
-                                mobileNavOpen ? styles.hamburgerBarBottom : ""
-                            }`}
-                        />
-                    </button>
-
-                    {mobileNavOpen && (
-                        <div className={styles.mobileNavMenu}>
-                            {navLinks}
-                        </div>
-                    )}
-
-                </div>
-
-                <div className={styles.userWrapper} ref={menuRef}>
-
-                    <button
-                        className={styles.user}
-                        onClick={() => {
-                            setMenuOpen((prev) => !prev);
-                            setMobileNavOpen(false);
-                        }}
-                        aria-haspopup="true"
-                        aria-expanded={menuOpen}
-                    >
-                        {initials}
-                    </button>
-
-                    {menuOpen && (
-                        <div className={styles.userMenu}>
-
-                            <Link
-                                href="/compte"
-                                className={styles.userMenuItem}
-                                onClick={() => setMenuOpen(false)}
-                            >
-                                Voir mon compte
-                            </Link>
-
-                            <button
-                                className={`${styles.userMenuItem} ${styles.logoutItem}`}
-                                onClick={handleLogout}
-                            >
-                                Se déconnecter
-                            </button>
-
-                        </div>
-                    )}
-
-                </div>
-
-            </div>
-
-        </nav>
-    );
+        <div
+          id="mobile-menu"
+          className={`${styles.menu} ${open ? styles.menuOpen : ""}`}
+        >
+          <Link href="/" className={styles.menuLink}>
+            Accueil
+          </Link>
+          <Link href="/a-propos" className={styles.menuLink}>
+            À propos
+          </Link>
+          <Link href="/logements/nouveau" className={styles.menuLink}>
+            + Ajouter un logement
+          </Link>
+          <Link href="/favoris" className={styles.menuLink}>
+            Favoris
+          </Link>
+          <Link href="/messages" className={styles.menuLink}>
+            Messages
+          </Link>
+        </div>
+      </div>
+    </header>
+  );
 }
