@@ -4,16 +4,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import styles from "./Navbar.module.css";
 
 export default function NavBar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
+  const { isAuthenticated, logout } = useAuth();
+
   // Ferme le menu mobile à chaque changement de page
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  async function handleLogout() {
+    await logout();
+    setOpen(false);
+  }
 
   return (
     <header className={styles.header}>
@@ -23,6 +31,7 @@ export default function NavBar() {
           <Link href="/" className={styles.link}>
             Accueil
           </Link>
+
           <Link href="/a-propos" className={styles.link}>
             À propos
           </Link>
@@ -39,36 +48,55 @@ export default function NavBar() {
         </Link>
 
         <div className={styles.right}>
-          <Link href="/logements/nouveau" className={styles.addLink}>
-            + Ajouter un logement
-          </Link>
-          <Link
-            href="/favoris"
-            className={styles.iconLink}
-            aria-label="Favoris"
-          >
-            <Image
-              src="/icone_heart_red.svg"
-              alt="logo coeur rouge"
-              width={16}
-              height={16}
-              priority
-            />
-          </Link>
-          <span className={styles.spacer}>|</span>
-          <Link
-            href="/messages"
-            className={styles.iconLink}
-            aria-label="Messages"
-          >
-            <Image
-              src="/icone_tchat_red.svg"
-              alt="logo tchat rouge"
-              width={16}
-              height={16}
-              priority
-            />
-          </Link>
+          {isAuthenticated ? (
+            <>
+              <Link href="/logements/nouveau" className={styles.addLink}>
+                + Ajouter un logement
+              </Link>
+
+              <Link
+                href="/favoris"
+                className={styles.iconLink}
+                aria-label="Favoris"
+              >
+                <Image
+                  src="/icone_heart_red.svg"
+                  alt=""
+                  width={16}
+                  height={16}
+                  priority
+                />
+              </Link>
+
+              <span className={styles.spacer}>|</span>
+
+              <Link
+                href="/messages"
+                className={styles.iconLink}
+                aria-label="Messages"
+              >
+                <Image
+                  src="/icone_tchat_red.svg"
+                  alt=""
+                  width={16}
+                  height={16}
+                  priority
+                />
+              </Link>
+
+              <button
+                type="button"
+                className={styles.logoutButton}
+                onClick={handleLogout}
+              >
+                Déconnexion
+              </button>
+            </>
+          ) : (
+            <Link href="/connexion/login" className={styles.loginLink}>
+              Connexion
+            </Link>
+          )}
         </div>
       </nav>
 
@@ -77,7 +105,7 @@ export default function NavBar() {
         <div className={styles.mobileBar}>
           <Link href="/" aria-label="Kasa - accueil">
             <Image
-              src="logo_house.svg"
+              src="/logo_house.svg"
               alt="Kasa"
               width={30}
               height={32}
@@ -96,11 +124,17 @@ export default function NavBar() {
             <span
               className={`${styles.burgerLine} ${open ? styles.lineTop : ""}`}
             />
+
             <span
-              className={`${styles.burgerLine} ${styles.lineShort} ${open ? styles.lineMiddle : ""}`}
+              className={`${styles.burgerLine} ${styles.lineShort} ${
+                open ? styles.lineMiddle : ""
+              }`}
             />
+
             <span
-              className={`${styles.burgerLine} ${open ? styles.lineBottom : ""}`}
+              className={`${styles.burgerLine} ${
+                open ? styles.lineBottom : ""
+              }`}
             />
           </button>
         </div>
@@ -112,18 +146,38 @@ export default function NavBar() {
           <Link href="/" className={styles.menuLink}>
             Accueil
           </Link>
+
           <Link href="/a-propos" className={styles.menuLink}>
             À propos
           </Link>
-          <Link href="/logements/nouveau" className={styles.menuLink}>
-            + Ajouter un logement
-          </Link>
-          <Link href="/favoris" className={styles.menuLink}>
-            Favoris
-          </Link>
-          <Link href="/messages" className={styles.menuLink}>
-            Messages
-          </Link>
+
+          {isAuthenticated ? (
+            <>
+              <Link href="/logements/nouveau" className={styles.menuLink}>
+                + Ajouter un logement
+              </Link>
+
+              <Link href="/favoris" className={styles.menuLink}>
+                Favoris
+              </Link>
+
+              <Link href="/messages" className={styles.menuLink}>
+                Messages
+              </Link>
+
+              <button
+                type="button"
+                className={styles.menuButton}
+                onClick={handleLogout}
+              >
+                Déconnexion
+              </button>
+            </>
+          ) : (
+            <Link href="/connexion/login" className={styles.menuLink}>
+              Connexion
+            </Link>
+          )}
         </div>
       </div>
     </header>

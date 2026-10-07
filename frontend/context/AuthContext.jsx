@@ -27,21 +27,19 @@ export function AuthProvider({ children }) {
     setLoading(false);
   }, []);
 
-    async function login(email, password) {
+  async function login(email, password) {
     const data = await loginService(email, password);
 
     const loggedUser = data.user ?? data.data?.user;
 
-    console.log(loggedUser);
-
     if (!loggedUser) {
-        throw new Error("Réponse de connexion inattendue");
+      throw new Error("Réponse de connexion inattendue");
     }
 
     saveUser(loggedUser);
     setUser(loggedUser);
     return data;
-    }
+  }
 
   async function logout() {
     try {

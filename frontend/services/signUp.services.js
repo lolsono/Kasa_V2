@@ -1,24 +1,28 @@
+/*
+ * Par défaut le compte est créé en client.
+ */
 export async function signUpServices(name, email, password) {
+  const role = "client";
 
-    const response = await fetch("/api/signUp", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            name,
-            email,
-            password,
-        }),
-    });
+  const response = await fetch("/api/signUp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name,
+      email,
+      password,
+      role,
+    }),
+  });
 
-    const data = await response.json();
+  const data = await response.json();
 
-    if (!response.ok || !data.success) {
-        throw new Error(
-            data.message || "Erreur lors de la création"
-        );
-    }
+  // L'API a retourné une erreur
+  if (!response.ok) {
+    throw new Error(data.error || "Erreur lors de la création");
+  }
 
-    return data;
+  return data;
 }

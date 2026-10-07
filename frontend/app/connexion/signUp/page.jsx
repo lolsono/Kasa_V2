@@ -1,142 +1,123 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+import Link from "next/link";
 import styles from "./singUp.module.css";
 import { useState } from "react";
 import { signUpServices } from "@/services/signUp.services";
 import { useAuth } from "@/context/AuthContext";
 
 export default function SignUp() {
+  const { refreshUser } = useAuth();
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
 
-    const { refreshUser } = useAuth();
-    const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState("");
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-    async function handleSubmit(event) {
+    setErrorMessage("");
 
-        event.preventDefault();
+    const formData = new FormData(event.currentTarget);
 
-        setErrorMessage("");
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-        const formData = new FormData(event.currentTarget);
+    //Fusion du lastName et FirstName
+    //const firstName = formData.get("firstName");
+    //const lastName = formData.get("lastName");
+    const name = formData.get("firstName");
 
-        const email = formData.get("email");
-        const password = formData.get("password");
-        const name = formData.get("name");
-
-        try {
-            await signUpServices(name, email, password);
-            await refreshUser();
-            router.push("/dashboard");
-
-        } catch (error) {
-            console.error(error.message);
-            setErrorMessage(error.message);
-        }
+    try {
+      await signUpServices(name, email, password);
+      await refreshUser();
+      router.push("/dashboard");
+    } catch (error) {
+      console.error(error.message);
+      setErrorMessage(error.message);
     }
+  }
 
-    return (
-        <main className={styles.page}>
-            <div className={styles.container}>
+  return (
+    <main className={styles.page}>
+      <div className={styles.container}>
+        <h1>Rejoignez la communauté Kasa</h1>
+        <p className={styles.subtitle}>
+          Créez votre compte et commencez à voyager autrement : réservez des
+          logements uniques, découvrez de nouvelles destinations et partagez vos
+          propres lieux avec d’autres voyageurs.
+        </p>
 
-                {/* Partie gauche */}
-                <section className={styles.formSection}>
+        <form onSubmit={handleSubmit} className={styles.formContainer}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="lastName">Nom</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              autoComplete="family-name"
+              required
+            />
+          </div>
 
-                    <div className={styles.logo}>
-                        <Image
-                            src="/Logo.svg"
-                            alt="Abricot"
-                            width={105}
-                            height={40}
-                            priority
-                        />
-                    </div>
+          <div className={styles.inputGroup}>
+            <label htmlFor="firstName">Prénom</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              autoComplete="given-name"
+              required
+            />
+          </div>
 
-                    <div className={styles.formContainer}>
+          <div className={styles.inputGroup}>
+            <label htmlFor="email">Adresse email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              autoComplete="email"
+              required
+            />
+          </div>
 
-                        <h1>Inscription</h1>
+          <div className={styles.inputGroup}>
+            <label htmlFor="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              autoComplete="new-password"
+              minLength={8}
+              required
+            />
+          </div>
 
-                        <form onSubmit={handleSubmit}>
+          <div className={styles.terms}>
+            <input type="checkbox" id="terms" name="terms" required />
+            <label htmlFor="terms">
+              J’accepte les{" "}
+              <Link href="/conditions-generales">
+                conditions générales d’utilisation
+              </Link>
+            </label>
+          </div>
 
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="name">
-                                    Name
-                                </label>
+          {errorMessage && (
+            <p className={styles.errorMessage} role="alert">
+              {errorMessage}
+            </p>
+          )}
 
-                                <input
-                                    type="name"
-                                    id="name"
-                                    name="name"
-                                />
-                            </div>
+          <button type="submit" className={styles.submitButton}>
+            S’inscrire
+          </button>
+        </form>
 
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="email">
-                                    Email
-                                </label>
-
-                                <input
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                />
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label htmlFor="password">
-                                    Mot de passe
-                                </label>
-
-                                <input
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                />
-                            </div>
-                            
-                            {errorMessage && (
-                                <p className={styles.errorMessage}>
-                                    {errorMessage}
-                                </p>
-                            )}
-
-                            <button
-                                type="submit"
-                                className={styles.loginButton}
-                            >
-                                S’inscrire
-                            </button>
-
-                        </form>
-
-                    </div>
-
-                    <div className={styles.register}>
-                        <span>Déjà inscrit ?</span>
-
-                        <a href="/connexion/login">
-                            Se connecter
-                        </a>
-                    </div>
-
-                </section>
-
-
-                {/* Partie droite */}
-                <section className={styles.imageSection}>
-                    <Image
-                        src="/background_Sign_Up.jpg"
-                        alt="Bureau avec ordinateur et fournitures"
-                        fill
-                        priority
-                        className={styles.image}
-                    />
-                </section>
-
-            </div>
-        </main>
-    );
+        <p className={styles.login}>
+          Déjà membre ? <Link href="/connexion/login">Se connecter</Link>
+        </p>
+      </div>
+    </main>
+  );
 }
-
-

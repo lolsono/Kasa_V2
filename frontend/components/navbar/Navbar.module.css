@@ -86,6 +86,54 @@
     color: #99331A;
 }
 
+/* Bouton de déconnexion */ 
+
+.logoutButton {
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: 12px;
+    color: #99331A;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.logoutButton:hover {
+    color: #FF5A3C;
+}
+
+.logoutButton:focus-visible {
+    outline: 2px solid #99331A;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
+/* Bouton de connexion */
+
+.loginLink {
+    border: none;
+    background: none;
+    padding: 0;
+    margin-left: 0px;
+    color: #0d0d0d;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.loginLink:hover {
+    color: #99331A;
+}
+
+.loginLink:focus-visible {
+    outline: 2px solid #99331A;
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+
 /* ================= MOBILE ================= */
 .mobile {
     display: none;
@@ -188,6 +236,31 @@
     .menuLink:hover {
         color: #99331A;
         background-color: #FFFAF7;
+    }
+
+    /* Bouton de déconnexion */
+    .menuButton {
+        width: 100%;
+        padding: 14px 20px;
+        border: none;
+        border-bottom: 1px solid #FFFFFF;
+        background-color: #FFFFFF;
+        color: #99331A;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        text-align: left;
+        cursor: pointer;
+    }
+
+    .menuButton:hover {
+        color: #99331A;
+        background-color: #FFFAF7;
+    }
+
+    .menuButton:focus-visible {
+        outline: 2px solid #99331A;
+        outline-offset: -2px;
     }
 }
 
