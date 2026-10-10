@@ -143,7 +143,7 @@ export default function NavBar() {
           id="mobile-menu"
           className={`${styles.menu} ${open ? styles.menuOpen : ""}`}
         >
-          <Link href="/" className={styles.menuLink}>
+          <Link href="/acceuil" className={styles.menuLink}>
             Accueil
           </Link>
 

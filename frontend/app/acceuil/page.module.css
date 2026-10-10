@@ -1,0 +1,176 @@
+.page {
+  background: #fffbf8;
+  min-height: 100vh;
+  padding: 24px 0 64px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #a63a1e;
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 689 / 283;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.heroImage {
+  object-fit: cover;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.message {
+  text-align: center;
+  color: #5c5c5c;
+  font-size: 14px;
+  padding: 32px 0;
+}
+
+/* Cards bas de page */
+
+.how {
+  background: #fff;
+  border-radius: 12px;
+  margin-top: 24px;
+  padding: 40px 24px 48px;
+  text-align: center;
+}
+
+.howTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px;
+}
+
+.howSubtitle {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  max-width: 480px;
+  margin: 0 auto 40px;
+}
+
+.howSteps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.howStep {
+  background: #862915;
+  border-radius: 6px;
+  padding: 24px 16px;
+  min-height: 136px;
+  text-align: left;
+  color: #fff;
+}
+
+.howStepTitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.howStepText {
+  font-size: 10px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .page {
+    padding: 16px 0 40px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .header {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .hero {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Cards bas de page */
+
+  .how {
+    padding: 32px 16px;
+    margin-top: 20px;
+  }
+
+  .howTitle {
+    font-size: 16px;
+  }
+
+  .howSubtitle {
+    margin-bottom: 24px;
+  }
+
+  .howSteps {
+    grid-template-columns: 1fr;
+  }
+
+  .howStep {
+    min-height: 0;
+  }
+
+  .howStepTitle {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .howStepText {
+    font-size: 13px;
+  }
+}
