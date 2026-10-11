@@ -1,0 +1,165 @@
+.page {
+  background: #fffbf8;
+  min-height: 100vh;
+  padding: 24px 0 64px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #a63a1e;
+  margin: 0 0 16px;
+}
+
+.text {
+  font-size: 12px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  max-width: 560px;
+  margin: 0 auto 16px;
+}
+
+.text:last-child {
+  margin-bottom: 0;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 693 / 285;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 40px;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+}
+
+.mission {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.missionContent {
+  max-width: 440px;
+}
+
+.missionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #a63a1e;
+  margin: 0 0 16px;
+}
+
+.list {
+  margin: 0 0 20px;
+  padding-left: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+.listItem {
+  margin-bottom: 14px;
+  padding-left: 4px;
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+}
+
+.highlight {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #a63a1e;
+  margin: 0;
+}
+
+.side {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 307 / 285;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .page {
+    padding: 16px 0 40px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .header {
+    margin-bottom: 24px;
+  }
+
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .text {
+    font-size: 14px;
+  }
+
+  .hero {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  .mission {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  /* Les enfants (titre, liste, texte) deviennent des éléments de la grille,
+     ce qui permet de glisser l'image entre la liste et le texte rouge */
+  .missionContent {
+    display: contents;
+  }
+
+  .missionTitle {
+    order: 1;
+    font-size: 18px;
+  }
+
+  .list {
+    order: 2;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+
+  .side {
+    order: 3;
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  .highlight {
+    order: 4;
+    font-size: 16px;
+  }
+}
