@@ -1,0 +1,82 @@
+.page {
+  background: #fffbf8;
+  min-height: 100vh;
+  padding: 24px 0 64px;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  background: #f3f1ef;
+  color: #444;
+  font-size: 12px;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-bottom: 32px;
+  transition: background 0.2s ease;
+}
+
+.back:hover {
+  background: #e9e5e1;
+}
+
+.back:focus-visible {
+  outline: 2px solid #a63a1e;
+  outline-offset: 2px;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 16px;
+  align-items: start;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.side {
+  position: sticky;
+  top: 24px;
+}
+
+.message {
+  text-align: center;
+  color: #5c5c5c;
+  font-size: 14px;
+  padding: 48px 0;
+}
+
+@media (max-width: 767px) {
+  .page {
+    padding: 16px 0 40px;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .back {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side {
+    position: static;
+  }
+}
