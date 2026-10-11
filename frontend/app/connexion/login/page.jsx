@@ -24,7 +24,7 @@ export default function Connexion() {
     try {
       await login(email, password);
       await refreshUser();
-      router.push("/dashboard");
+      router.push("/acceuil");
     } catch (error) {
       console.error(error.message);
       setErrorMessage(error.message);

@@ -30,7 +30,7 @@ export default function SignUp() {
     try {
       await signUpServices(name, email, password);
       await refreshUser();
-      router.push("/dashboard");
+      router.push("/acceuil");
     } catch (error) {
       console.error(error.message);
       setErrorMessage(error.message);

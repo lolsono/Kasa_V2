@@ -4,6 +4,7 @@ import NavBar from "@/components/navbar/Navbar";
 import Footer from "@/components/footer/Footer";
 
 import { AuthProvider } from "@/context/AuthContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,15 +23,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable}`}
-    >
+    <html lang="fr" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body>
         <AuthProvider>
-          <NavBar/>
-          {children}
-          <Footer/>
+          <FavoritesProvider>
+            <NavBar />
+            {children}
+            <Footer />
+          </FavoritesProvider>
         </AuthProvider>
       </body>
     </html>

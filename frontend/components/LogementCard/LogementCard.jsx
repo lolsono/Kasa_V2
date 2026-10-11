@@ -18,7 +18,7 @@ export default function LogementCard({ logement }) {
         />
       </div>
 
-      <FavoriteButton title={title} />
+      <FavoriteButton id={id} title={title} />
 
       <div className={styles.body}>
         <h2 className={styles.title}>
