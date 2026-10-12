@@ -4,6 +4,20 @@ import { useEffect, useState } from "react";
 import { useFavorites } from "@/context/FavoritesContext";
 import styles from "./LogementCard.module.css";
 
+/**
+ * Bouton cœur permettant d'ajouter un logement aux favoris ou de l'en retirer.
+ *
+ * - L'état (cœur rouge ou gris) est lu dans `FavoritesContext`.
+ * - Un clic ajoute le logement s'il n'est pas favori, le retire sinon.
+ * - Les clics sont ignorés tant qu'une requête est en cours.
+ * - En cas d'erreur, le message renvoyé par l'API est affiché dans une bulle
+ *   (`role="alert"`) qui disparaît après 4 secondes.
+ *
+ * @param {Object} props
+ * @param {string} props.id - Id du logement.
+ * @param {string} props.title - Titre du logement (utilisé pour l'accessibilité).
+ * @returns {JSX.Element}
+ */
 export default function FavoriteButton({ id, title }) {
   const { isFavorite, addFavorite, removeFavorite } = useFavorites();
   const [pending, setPending] = useState(false);

@@ -1,6 +1,22 @@
 import { NextResponse } from "next/server";
 
-// GET /api/favoris/getFavoris/14   (14 = id de l'utilisateur)
+/**
+ * Route GET /api/favoris/getFavoris/{id}
+ *
+ * Récupère les favoris d'un utilisateur auprès du backend.
+ * Le token est lu dans le cookie httpOnly `auth_token` puis transmis en
+ * `Authorization: Bearer`.
+ *
+ * Réponses :
+ * - 200 : liste des favoris renvoyée par l'API ;
+ * - 401 : cookie `auth_token` absent ;
+ * - code de l'API : erreur renvoyée par le backend, avec son message ;
+ * - 500 : erreur interne (backend injoignable, etc.).
+ *
+ * @param {import("next/server").NextRequest} request
+ * @param {{ params: Promise<{ id: string }> }} context - `id` = id de l'utilisateur.
+ * @returns {Promise<NextResponse>}
+ */
 export async function GET(request, { params }) {
   try {
     const { id } = await params;

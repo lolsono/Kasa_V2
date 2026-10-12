@@ -1,6 +1,23 @@
 import { NextResponse } from "next/server";
 
-// POST /api/favoris/addFavoris/c67ab8a7   (c67ab8a7 = id du logement)
+/**
+ * Route POST /api/favoris/addFavoris/{id}
+ *
+ * Ajoute un logement aux favoris auprès du backend.
+ * Le body de la requête (`{ user_id, score, comment }`) est transmis tel quel.
+ * Le token est lu dans le cookie httpOnly `auth_token` puis transmis en
+ * `Authorization: Bearer`.
+ *
+ * Réponses :
+ * - code de l'API (200/201) : réponse du backend ;
+ * - 401 : cookie `auth_token` absent ;
+ * - code de l'API : erreur renvoyée par le backend, avec son message ;
+ * - 500 : erreur interne.
+ *
+ * @param {import("next/server").NextRequest} request
+ * @param {{ params: Promise<{ id: string }> }} context - `id` = id du logement.
+ * @returns {Promise<NextResponse>}
+ */
 export async function POST(request, { params }) {
   try {
     const { id } = await params;

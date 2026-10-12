@@ -1,6 +1,23 @@
 import { NextResponse } from "next/server";
 
-// DELETE /api/favoris/removeFavoris/c67ab8a7   (c67ab8a7 = id du logement)
+/**
+ * Route DELETE /api/favoris/removeFavoris/{id}
+ *
+ * Retire un logement des favoris auprès du backend.
+ * Le token est lu dans le cookie httpOnly `auth_token` puis transmis en
+ * `Authorization: Bearer`. Une réponse du backend sans contenu (204) est
+ * acceptée et renvoyée sous la forme `{ success: true }`.
+ *
+ * Réponses :
+ * - 200 : retrait effectué ;
+ * - 401 : cookie `auth_token` absent ;
+ * - code de l'API : erreur renvoyée par le backend, avec son message ;
+ * - 500 : erreur interne.
+ *
+ * @param {import("next/server").NextRequest} request
+ * @param {{ params: Promise<{ id: string }> }} context - `id` = id du logement.
+ * @returns {Promise<NextResponse>}
+ */
 export async function DELETE(request, { params }) {
   try {
     const { id } = await params;

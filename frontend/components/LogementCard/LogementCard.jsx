@@ -3,6 +3,16 @@ import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import styles from "./LogementCard.module.css";
 
+/**
+ * Carte d'un logement : image, titre, localisation et prix par nuit.
+ * Toute la carte est cliquable et mène à `/logements/{id}`.
+ * Le bouton cœur (`FavoriteButton`) lit lui-même l'état des favoris dans le
+ * Context : la carte n'a pas besoin de le connaître.
+ *
+ * @param {Object} props
+ * @param {import("@/types/typedefs").Logement} props.logement
+ * @returns {JSX.Element}
+ */
 export default function LogementCard({ logement }) {
   const { id, title, cover, location, price_per_night } = logement;
 

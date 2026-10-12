@@ -22,6 +22,24 @@ import {
 
 const FavoritesContext = createContext(null);
 
+/**
+ * Fournit l'état des favoris à toute l'application.
+ *
+ * - Garde en mémoire les ids des logements favoris, avec une copie dans le
+ *   localStorage pour un affichage immédiat après un rafraîchissement.
+ * - L'API reste la référence : à chaque connexion, la liste est rechargée
+ *   et remplace la copie locale.
+ * - Les ajouts et retraits sont optimistes : l'interface change tout de suite
+ *   et revient en arrière si l'API refuse.
+ * - Se recharge automatiquement quand l'utilisateur change (connexion /
+ *   déconnexion), en observant `useAuth()`.
+ *
+ * Doit être placé À L'INTÉRIEUR de `<AuthProvider>`.
+ *
+ * @param {Object} props
+ * @param {import("react").ReactNode} props.children
+ * @returns {JSX.Element}
+ */
 export function FavoritesProvider({ children }) {
   const { user, loading: authLoading } = useAuth();
   const userId = user?.id;
@@ -68,6 +86,14 @@ export function FavoritesProvider({ children }) {
     loadFavorites();
   }, [authLoading, userId]);
 
+  /**
+   * Ajoute un logement aux favoris (mise à jour optimiste).
+   *
+   * @param {string} propertyId
+   * @returns {Promise<void>}
+   * @throws {Error} Si l'utilisateur n'est pas connecté, ou avec le message
+   * de l'API si elle refuse (l'ajout est alors annulé).
+   */
   const addFavorite = useCallback(
     async (propertyId) => {
       if (!userId) {
@@ -76,7 +102,7 @@ export function FavoritesProvider({ children }) {
 
       // Cœur rouge tout de suite
       updateIds((previous) =>
-        previous.includes(propertyId) ? previous : [...previous, propertyId],
+        previous.includes(propertyId) ? previous : [...previous, propertyId]
       );
 
       try {
@@ -87,9 +113,17 @@ export function FavoritesProvider({ children }) {
         throw error;
       }
     },
-    [updateIds, userId],
+    [updateIds, userId]
   );
 
+  /**
+   * Retire un logement des favoris (mise à jour optimiste).
+   *
+   * @param {string} propertyId
+   * @returns {Promise<void>}
+   * @throws {Error} Avec le message de l'API si elle refuse
+   * (le retrait est alors annulé).
+   */
   const removeFavorite = useCallback(
     async (propertyId) => {
       updateIds((previous) => previous.filter((id) => id !== propertyId));
@@ -99,12 +133,12 @@ export function FavoritesProvider({ children }) {
       } catch (error) {
         // L'API a refusé : on remet le favori
         updateIds((previous) =>
-          previous.includes(propertyId) ? previous : [...previous, propertyId],
+          previous.includes(propertyId) ? previous : [...previous, propertyId]
         );
         throw error;
       }
     },
-    [updateIds],
+    [updateIds]
   );
 
   const value = useMemo(
@@ -115,7 +149,7 @@ export function FavoritesProvider({ children }) {
       addFavorite,
       removeFavorite,
     }),
-    [ids, ready, addFavorite, removeFavorite],
+    [ids, ready, addFavorite, removeFavorite]
   );
 
   return (
@@ -125,13 +159,17 @@ export function FavoritesProvider({ children }) {
   );
 }
 
+/**
+ * Accède à l'état des favoris.
+ *
+ * @returns {import("@/types/typedefs").FavoritesContextValue}
+ * @throws {Error} Si utilisé en dehors d'un `<FavoritesProvider>`.
+ */
 export function useFavorites() {
   const context = useContext(FavoritesContext);
 
   if (!context) {
-    throw new Error(
-      "useFavorites doit être utilisé dans un <FavoritesProvider>",
-    );
+    throw new Error("useFavorites doit être utilisé dans un <FavoritesProvider>");
   }
 
   return context;

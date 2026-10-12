@@ -7,6 +7,18 @@ import { useFavorites } from "@/context/FavoritesContext";
 import { getFavorites } from "@/services/favoriteServices";
 import styles from "./page.module.css";
 
+/**
+ * Page « Vos favoris » (`/favoris`).
+ *
+ * - Charge la liste complète des logements favoris depuis l'API (le Context
+ *   ne garde que les ids, or la page a besoin des titres, photos et prix).
+ * - N'affiche que les logements pour lesquels `isFavorite` est vrai : un cœur
+ *   retiré fait donc disparaître la carte immédiatement.
+ * - Gère les états : chargement, utilisateur non connecté, erreur (avec le
+ *   message de l'API) et liste vide.
+ *
+ * @returns {JSX.Element}
+ */
 export default function FavorisPage() {
   const { user, loading: authLoading } = useAuth();
   const { isFavorite, ready } = useFavorites();
