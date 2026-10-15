@@ -1,0 +1,40 @@
+.thread {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+  min-height: 0;
+  padding: 32px 40px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 4px 0;
+  font-size: 10px;
+  color: #666;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #cfc8c3;
+}
+
+.empty {
+  margin: auto;
+  font-size: 14px;
+  color: #888;
+}
+
+@media (max-width: 767px) {
+  .thread {
+    gap: 20px;
+    padding: 20px 16px;
+  }
+}

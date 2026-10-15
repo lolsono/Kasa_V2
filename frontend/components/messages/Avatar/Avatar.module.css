@@ -1,0 +1,36 @@
+.avatar {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-radius: 6px;
+}
+
+.light {
+  background: #f4f4f4;
+}
+
+.dark {
+  background: #5a5a5a;
+}
+
+.md {
+  width: 44px;
+  height: 44px;
+}
+
+.sm {
+  width: 28px;
+  height: 28px;
+}
+
+.image {
+  object-fit: cover;
+}
+
+@media (max-width: 767px) {
+  .md {
+    width: 32px;
+    height: 32px;
+  }
+}

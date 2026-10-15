@@ -1,12 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
-export const metadata = {
-  title: "À propos - Kasa",
-  description:
-    "Chez Kasa, nous croyons que chaque voyage mérite un lieu unique où se sentir bien.",
-};
-
 const MISSIONS = [
   "Offrir une plateforme fiable et simple d’utilisation",
   "Proposer des hébergements variés et de qualité",
