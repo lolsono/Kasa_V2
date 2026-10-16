@@ -110,31 +110,3 @@ Fonctionnalités testées
 🎠 Carrousels des logements : vérification des carrousels présents sur les pages de détails des logements.
 
 Les tests sont regroupés dans le répertoire __test__.
-
-📁 Structure du projet
-
-Voici une représentation indicative de l'organisation du projet :
-
-projet/
-├── backend/
-│   ├── README.md
-│   └── ...
-│
-├── frontend/
-│   ├── app/
-│   ├── services/
-│   ├── __test__/
-│   ├── exemple.env
-│   ├── package.json
-│   └── ...
-│
-└── README.md
-
-
-Remarque : adaptez cette arborescence à la structure réelle de votre dépôt.
-
-📖 Documentation complémentaire
-
-Pour toute information supplémentaire concernant le backend, sa configuration ou ses commandes spécifiques, consultez le README présent dans le répertoire backend.
-
-Bon développement ! 🚀
