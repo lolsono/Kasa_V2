@@ -7,11 +7,47 @@ import { useState } from "react";
 import { signUpServices } from "@/services/signUp.services";
 import { useAuth } from "@/context/AuthContext";
 
+/**
+ * Page d'inscription (création d'un compte client).
+ *
+ * Affiche un formulaire (nom, prénom, email, mot de passe de 8 caractères
+ * minimum, acceptation des CGU). À la soumission :
+ * 1. appelle le service `signUpServices` ;
+ * 2. met à jour l'utilisateur courant via `refreshUser` (contexte d'authentification) ;
+ * 3. redirige vers la page d'accueil.
+ *
+ * En cas d'échec, le message d'erreur est affiché dans le formulaire
+ * (`role="alert"`).
+ *
+ * Composant client (`"use client"`) car il utilise des hooks et gère un formulaire.
+ *
+ * @component
+ * @returns {JSX.Element} La page d'inscription.
+ *
+ * @example
+ * // Rendue automatiquement par le routeur Next.js sur /connexion/signUp
+ */
 export default function SignUp() {
+  /** Fonction du contexte d'authentification qui recharge l'utilisateur connecté. */
   const { refreshUser } = useAuth();
+
+  /** Routeur Next.js, utilisé pour la redirection après inscription. */
   const router = useRouter();
+
+  /** @type {[string, Function]} Message d'erreur affiché sous le formulaire (vide si aucune erreur). */
   const [errorMessage, setErrorMessage] = useState("");
 
+  /**
+   * Gère la soumission du formulaire d'inscription.
+   *
+   * Lit les champs du formulaire, crée le compte, rafraîchit l'utilisateur
+   * puis redirige vers `/acceuil`. En cas d'erreur, affiche le message
+   * retourné par le service.
+   *
+   * @async
+   * @param {React.FormEvent<HTMLFormElement>} event - Événement de soumission du formulaire.
+   * @returns {Promise<void>}
+   */
   async function handleSubmit(event) {
     event.preventDefault();
 

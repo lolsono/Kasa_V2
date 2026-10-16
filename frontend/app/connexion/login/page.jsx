@@ -6,11 +6,47 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 
+/**
+ * Page de connexion.
+ *
+ * Affiche un formulaire (email, mot de passe). À la soumission :
+ * 1. appelle `login` fourni par le contexte d'authentification ;
+ * 2. met à jour l'utilisateur courant via `refreshUser` ;
+ * 3. redirige vers la page d'accueil.
+ *
+ * En cas d'échec, le message d'erreur est affiché dans le formulaire
+ * (`role="alert"`). La page propose aussi des liens vers « Mot de passe
+ * oublié » et vers l'inscription.
+ *
+ * Composant client (`"use client"`) car il utilise des hooks et gère un formulaire.
+ *
+ * @component
+ * @returns {JSX.Element} La page de connexion.
+ *
+ * @example
+ * // Rendue automatiquement par le routeur Next.js sur /connexion/login
+ */
 export default function Connexion() {
+  /** Fonctions du contexte d'authentification : connexion et rechargement de l'utilisateur. */
   const { login, refreshUser } = useAuth();
+
+  /** Routeur Next.js, utilisé pour la redirection après connexion. */
   const router = useRouter();
+
+  /** @type {[string, Function]} Message d'erreur affiché sous le formulaire (vide si aucune erreur). */
   const [errorMessage, setErrorMessage] = useState("");
 
+  /**
+   * Gère la soumission du formulaire de connexion.
+   *
+   * Lit l'email et le mot de passe, connecte l'utilisateur, rafraîchit
+   * l'utilisateur courant puis redirige vers `/acceuil`. En cas d'erreur,
+   * affiche le message retourné par le service.
+   *
+   * @async
+   * @param {React.FormEvent<HTMLFormElement>} event - Événement de soumission du formulaire.
+   * @returns {Promise<void>}
+   */
   async function handleSubmit(event) {
     event.preventDefault();
 

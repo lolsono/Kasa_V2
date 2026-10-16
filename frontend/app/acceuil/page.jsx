@@ -6,7 +6,16 @@ import LogementCard from "@/components/LogementCard/LogementCard.jsx";
 import { getLogements } from "@/services/logementServices";
 import styles from "./page.module.css";
 
-/* Pour l'affichage des cards d'explication */
+/**
+ * @typedef {Object} Step
+ * @property {string} title - Titre de l'étape.
+ * @property {string} text - Texte explicatif de l'étape.
+ */
+
+/**
+ * Étapes affichées dans la section « Comment ça marche ? ».
+ * @constant {Step[]}
+ */
 const STEPS = [
   {
     title: "Recherchez",
@@ -22,12 +31,43 @@ const STEPS = [
   },
 ];
 
+/**
+ * Page d'accueil : présentation de Kasa, liste des logements et section
+ * « Comment ça marche ? ».
+ *
+ * Au montage, charge les logements via le service `getLogements` puis affiche
+ * selon l'état :
+ * - un message de chargement tant que la requête est en cours ;
+ * - un message d'erreur si la récupération échoue ;
+ * - un message « Aucun logement à afficher » si la liste est vide ;
+ * - sinon une grille de `LogementCard`.
+ *
+ * Composant client (`"use client"`) car il utilise des hooks React.
+ *
+ * @component
+ * @returns {JSX.Element} La page d'accueil.
+ *
+ * @example
+ * // Rendue automatiquement par le routeur Next.js sur /acceuil
+ */
 export default function HomePage() {
+  /** @type {[Object[], Function]} Liste des logements récupérés depuis l'API. */
   const [logements, setLogements] = useState([]);
+
+  /** @type {[boolean, Function]} `true` tant que la requête est en cours. */
   const [loading, setLoading] = useState(true);
+
+  /** @type {[boolean, Function]} `true` si la récupération des logements a échoué. */
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
+    /**
+     * Charge la liste des logements et met à jour les états
+     * `logements`, `hasError` et `loading`.
+     *
+     * @async
+     * @returns {Promise<void>}
+     */
     async function load() {
       try {
         const data = await getLogements();

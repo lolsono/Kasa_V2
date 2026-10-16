@@ -1,12 +1,28 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 
+/**
+ * Missions de Kasa, affichées sous forme de liste numérotée.
+ * @constant {string[]}
+ */
 const MISSIONS = [
   "Offrir une plateforme fiable et simple d’utilisation",
   "Proposer des hébergements variés et de qualité",
   "Favoriser des échanges humains et chaleureux entre hôtes et voyageurs",
 ];
 
+/**
+ * Page « À propos » : présentation de Kasa, de ses valeurs et de ses missions.
+ *
+ * Page statique sans état ni appel API : composant serveur (pas de
+ * `"use client"`).
+ *
+ * @component
+ * @returns {JSX.Element} La page « À propos ».
+ *
+ * @example
+ * // Rendue automatiquement par le routeur Next.js sur la route « à propos »
+ */
 export default function AProposPage() {
   return (
     <main className={styles.page}>
