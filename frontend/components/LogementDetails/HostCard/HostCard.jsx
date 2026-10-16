@@ -2,6 +2,29 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./HostCard.module.css";
 
+/**
+ * @typedef {Object} Host
+ * @property {string} name - Nom de l'hôte.
+ * @property {string} [picture] - URL de la photo de profil. Si absente,
+ *   l'initiale du nom est affichée à la place.
+ */
+
+/**
+ * Carte de présentation de l'hôte d'un logement : avatar (ou initiale),
+ * nom, note moyenne et liens de contact vers la messagerie.
+ *
+ * Ne rend rien (`null`) si `host` n'est pas fourni.
+ * Composant serveur : aucun hook, donc pas de `"use client"`.
+ *
+ * @component
+ * @param {Object} props - Propriétés du composant.
+ * @param {Host} [props.host] - Informations sur l'hôte.
+ * @param {number|string} [props.rating] - Note moyenne de l'hôte, affichée avec une étoile.
+ * @returns {JSX.Element|null} La carte de l'hôte, ou `null` sans hôte.
+ *
+ * @example
+ * <HostCard host={{ name: "Alice", picture: "/alice.jpg" }} rating={4.8} />
+ */
 export default function HostCard({ host, rating }) {
   if (!host) return null;
 
