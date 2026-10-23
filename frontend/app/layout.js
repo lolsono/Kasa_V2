@@ -16,9 +16,30 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * Métadonnées SEO globales de l'application.
+ */
 export const metadata = {
-  title: "Kasa",
-  description: "App de réservation d'hébergement",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
+  ),
+  title: {
+    default: "Kasa",
+    template: "%s | Gestion de logements",
+  },
+  description: "Découvrez et consultez des logements grâce à notre plateforme.",
+  applicationName: "Kasa",
+  openGraph: {
+    title: "Gestion de logements",
+    description: "Découvrez les logements disponibles sur notre plateforme.",
+    siteName: "Kasa",
+    locale: "fr_FR",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
